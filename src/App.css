@@ -1,0 +1,4 @@
+:root {
+  --primary: #9f5bff;
+  --color-primary: var(--primary); /* This now resolves to #9f5bff */
+}
