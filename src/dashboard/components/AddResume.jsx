@@ -34,9 +34,9 @@ function AddResume() {
     }
     API.createResume(data)
       .then(res=>{
-        console.log(res)
+        console.log(res.data.data.documentId)
         if(res){
-          navigation('/dashboard/resume/'+uuid+'/edit')
+          navigation('/dashboard/resume/'+res.data.data.documentId+'/edit')
         }
       })
       .finally(setLoading(false))
