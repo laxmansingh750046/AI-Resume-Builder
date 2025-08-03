@@ -1,6 +1,16 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+.rsw-ce ul {
+  list-style-type: disc;
+  padding-left: 2em;
+}
+
+.rsw-ce ol {
+  list-style-type: decimal;
+  padding-left: 2em;
+}
+
 @custom-variant dark (&:is(.dark *));
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
