@@ -8,8 +8,14 @@ const getUserResumes = async (userEmail)=>{
    await new Promise((resolve) => setTimeout(resolve, 2000));
 }
 
+const updateResumeDetails = async (id,data)=>{
+   console.log("get resumes");
+   await new Promise((resolve) => setTimeout(resolve, 2000));
+}
+
 const API = {
     createResume,
-    getUserResumes
+    getUserResumes,
+    updateResumeDetails
 }
 export default API;
