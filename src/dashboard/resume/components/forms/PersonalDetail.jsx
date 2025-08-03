@@ -4,7 +4,7 @@ import { ResumeInfoContext } from '@/context/ResumeInfoContext'
 import { LoaderCircle } from 'lucide-react';
 import { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
-import {default as API} from '../../../../services/API.js';
+import {default as API} from '../../../../../services/API.js';
 import { toast } from 'sonner';
 
 function PersonalDetail({enabledNext}) {
