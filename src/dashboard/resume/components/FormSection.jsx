@@ -42,11 +42,11 @@ function FormSection() {
               <Summery  enabledNext={(v)=>setEnableNext(v)} />
         :activeFormIndex==3?
           <Experience />  
-          :activeFormIndex==4?
+        :activeFormIndex==4?
           <Education/>
-          :activeFormIndex==5?
+        :activeFormIndex==5?
           <Skills/>
-          :activeFormIndex==6?
+        :activeFormIndex==6?
           <Navigate to={'/my-resume/'+resumeId+"/view"}/>
               
         :null
