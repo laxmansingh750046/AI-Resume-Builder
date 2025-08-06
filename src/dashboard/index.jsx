@@ -1,7 +1,7 @@
 import React, { useEffect ,useState} from 'react'
 import AddResume from './components/AddResume.jsx'
 import { useUser } from '@clerk/clerk-react'
-import API from '../services/API.js';
+import API from '../../services/API.js';
 import ResumeCardItem from './components/ResumeCardItem.jsx';
 function Dashboard() {
   const [resumeList, setResumeList]=useState([]);

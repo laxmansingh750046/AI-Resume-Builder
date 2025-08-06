@@ -20,7 +20,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "../../components/ui/alert-dialog"
-import GlobalApi from './../../../service/GlobalApi'
+import GlobalApi from './../../../services/API.js'
 import { toast } from 'sonner'
 
 function ResumeCardItem({resume,refreshData}) {

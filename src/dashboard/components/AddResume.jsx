@@ -11,7 +11,7 @@ import {
 import { useState } from "react";
 import {v4 as uuidv4} from 'uuid'
 import { useUser } from "@clerk/clerk-react";
-import API from '../../services/API.js'
+import API from '../../../services/API.js'
 import { useNavigate } from "react-router-dom";
 
 function AddResume() {
@@ -22,6 +22,7 @@ function AddResume() {
   const navigation = useNavigate();
 
   const onCreate = ()=>{
+    console.log("create resume");
     setLoading(true);
     const uuid = uuidv4();
     const data = {
@@ -32,14 +33,17 @@ function AddResume() {
         userName: user?.fullName
       }
     }
-    API.createResume(data)
-      .then(res=>{
-        console.log(res.data.data.documentId)
-        if(res){
-          navigation('/dashboard/resume/'+res.data.data.documentId+'/edit')
-        }
-      })
-      .finally(setLoading(false))
+    // API.createResume(data)
+    //   .then(res=>{
+    //     console.log(res.data.data.documentId)
+    //     if(res){
+          // navigation('/dashboard/resume/'+res.data.data.documentId+'/edit')
+      //   }
+      // })
+      // .finally(setLoading(false))
+        navigation('/dashboard/resume/'+"testing"+'/edit')
+        setLoading(false);
+
   }
   return (
     <div>

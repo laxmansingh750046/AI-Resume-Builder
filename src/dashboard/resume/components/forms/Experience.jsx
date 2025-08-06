@@ -25,8 +25,7 @@ function Experience() {
     const [loading,setLoading]=useState(false);
 
     useEffect(()=>{
-        resumeInfo?.Experience.length>0&&setExperinceList(resumeInfo?.Experience)
-        
+        resumeInfo?.experience.length>0&&setExperinceList(resumeInfo?.experience)
     },[])
 
     const handleChange=(index,event)=>{

@@ -2,12 +2,12 @@ import React, { useState } from 'react'
 import PersonalDetail from './forms/PersonalDetail'
 import { Button } from '../../../components/ui/button.jsx'
 import { ArrowLeft, ArrowRight, Home, LayoutGrid } from 'lucide-react'
-import Summery from './forms/Summery';
-import Experience from './forms/Experience';
-import Education from './forms/Education';
-import Skills from './forms/Skills';
+import Summery from './forms/Summery.jsx';
+import Experience from './forms/Experience.jsx';
+import Education from './forms/Education.jsx';
+import Skills from './forms/Skills.jsx';
 import { Link, Navigate, useParams } from 'react-router-dom';
-import ThemeColor from './ThemeColor';
+// import ThemeColor from './ThemeColor';
 
 function FormSection() {
   const [activeFormIndex,setActiveFormIndex]=useState(1);
@@ -20,7 +20,7 @@ function FormSection() {
             <Link to={"/dashboard"}>
           <Button><Home/></Button>
           </Link>
-          <ThemeColor/>
+          {/* <ThemeColor/> */}
          
           </div>
           <div className='flex gap-2'>
