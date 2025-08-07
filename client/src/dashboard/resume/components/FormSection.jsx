@@ -18,8 +18,8 @@ function FormSection() {
         <div className='flex justify-between items-center'>
           <div className='flex gap-5'>
             <Link to={"/dashboard"}>
-          <Button><Home/></Button>
-          </Link>
+              <Button><Home/></Button>
+            </Link>
           {/* <ThemeColor/> */}
          
           </div>

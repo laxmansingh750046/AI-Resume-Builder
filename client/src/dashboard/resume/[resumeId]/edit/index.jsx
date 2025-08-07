@@ -7,11 +7,16 @@ import dummy from '../../../../data/dummy.jsx'
 
 function EditResume() {
   const [resumeInfo, setResumeInfo] = useState();
-  
-  const params = useParams();
+  const {resumeId} = useParams();
   useEffect(()=>{
-      setResumeInfo(dummy);
+      getResumeInfo();
   },[])
+
+  const getResumeInfo = ()=>{
+    //API.getResumeById(resumeId).then(res=>{
+     // setResumeInfo(res);})
+    
+  }
   return (
     <ResumeInfoContext.Provider value={{resumeInfo, setResumeInfo}}>
         <div className='grid grid-cols-1 md:grid-cols-2 p-10 gap-10'>

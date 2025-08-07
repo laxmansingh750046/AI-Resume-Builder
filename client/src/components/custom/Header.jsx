@@ -1,4 +1,3 @@
-import React from 'react'
 import {Button} from '../ui/button.jsx'
 import { UserButton, useUser } from '@clerk/clerk-react'
 import { Link } from 'react-router-dom';
@@ -11,7 +10,7 @@ function Header() {
       {isSignedIn
       ?<div className='flex gap-2 items-center'>
         <Link to={'/dashboard'}>
-        <Button variant="outline">Dashboard</Button>
+          <Button variant="outline">Dashboard</Button>
         </Link>
         <UserButton />
       </div>
