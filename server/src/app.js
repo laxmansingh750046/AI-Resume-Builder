@@ -15,9 +15,8 @@ app.use(express.urlencoded({extended:true,limit:"16kb"}));
 app.use(express.static("public"));
 app.use(cookieParser());
 
-app.get('/api/hello', (req, res) => {
-  res.json({ message: 'Hello World from backend!' });
-});
+import userRoutes from './routes/user-resumes.routes.js';
 
+app.use("api/user-resumes", userRoutes)
 
 export  {app};

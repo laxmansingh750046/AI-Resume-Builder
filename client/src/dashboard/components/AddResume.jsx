@@ -33,17 +33,14 @@ function AddResume() {
         userName: user?.fullName
       }
     }
-    // API.createResume(data)
-    //   .then(res=>{
-    //     console.log(res.data.data.documentId)
-    //     if(res){
-          // navigation('/dashboard/resume/'+res.data.data.documentId+'/edit')
-      //   }
-      // })
-      // .finally(setLoading(false))
-        navigation('/dashboard/resume/'+"testing"+'/edit')
-        setLoading(false);
-
+    API.CreateNewResume(data)
+      .then(res=>{
+        console.log(res.data.data.documentId)
+        if(res){
+          navigation('/dashboard/resume/'+res.data.data.documentId+'/edit')
+        }
+      })
+      .finally(setLoading(false))
   }
   return (
     <div>
