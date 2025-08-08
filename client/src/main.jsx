@@ -44,9 +44,9 @@ const router = createBrowserRouter([
   }
 ]);
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
+  // <StrictMode>
     <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl="/">
       <RouterProvider router={router}/>
     </ClerkProvider>
-  </StrictMode>,
+  // </StrictMode>,
 )
