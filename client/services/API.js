@@ -1,26 +1,30 @@
 import axios from "axios";
-import { Clerk } from "@clerk/clerk-js";
 
-const axiosClient = axios.create({
-  baseURL: import.meta.env.VITE_BACKEND_URL || "http://localhost:8000/api",
-  withCredentials: true,
-});
+const axiosClient = (getToken) => {
+  const instance = axios.create({
+    baseURL: import.meta.env.VITE_BACKEND_URL || "http://localhost:8000/api",
+    withCredentials: true,
+  });
 
-axiosClient.interceptors.request.use(async (config) => {
-  const token = await Clerk.session?.getToken(); 
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-}, (error) => {
-  return Promise.reject(error);
-});
+  instance.interceptors.request.use(async (config) => {
+    if (getToken) {
+      const token = await getToken();
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+    }
+    return config;
+  });
 
-const CreateNewResume = (data) => axiosClient.post('/user-resumes', data);
-const GetUserResumes = (email) => axiosClient.get('/user-resumes', { params: { email } });
-const GetResumeById = (id) => axiosClient.get(`/user-resumes/${id}`);
-const UpdateResumeDetail = (id, data) => axiosClient.put(`/user-resumes/${id}`, data);
-const DeleteResumeById = (id) => axiosClient.delete(`/user-resumes/${id}`);
+  return instance;
+};
+
+
+const CreateNewResume = (data,getToken) => axiosClient(getToken).post('/user-resumes', data);
+const GetUserResumes = (getToken) => axiosClient(getToken).get('/user-resumes');
+const GetResumeById = (id,getToken) => axiosClient(getToken).get(`/user-resumes/${id}`);
+const UpdateResumeDetail = (id, data,getToken) => axiosClient(getToken).put(`/user-resumes/${id}`, data);
+const DeleteResumeById = (id,getToken) => axiosClient(getToken).delete(`/user-resumes/${id}`);
 
 export default {
   CreateNewResume,
