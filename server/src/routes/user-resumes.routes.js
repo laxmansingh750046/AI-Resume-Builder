@@ -14,4 +14,12 @@ router.route('/:id').get(GetResumeById);
 router.route().put(UpdateResumeDetail);
 router.route().delete(DeleteResumeById);
 
+router.route('/')
+    .post(CreateNewResume)
+    .get(GetUserResumes);
+
+router.route('/:id')
+    .get(GetResumeById)
+    .put(UpdateResumeDetail)
+    .delete(DeleteResumeById);
 export default router;
