@@ -56,21 +56,14 @@ export const GetUserResumes = asyncHandler(async (req, res) => {
 
 export  const GetResumeById = asyncHandler(async (req, res) => {
   const resumeId = req.params.id;
-  const userId = req.auth.userId;
 
-  if (!userId) {
-    return res.status(401).json({
-      success: false,
-      message: "Unauthorized. User ID not found.",
-    });
-  }
-
-  const resume = await Resume.findOne({ _id: resumeId, userId });
+  const resume = await Resume.findOne({ _id: resumeId });
 
   if (!resume) {
     return res.status(404).json({
       success: false,
       message: "Resume not found or does not belong to the user.",
+      data: resume
     });
   }
 
