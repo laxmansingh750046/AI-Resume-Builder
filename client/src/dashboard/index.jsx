@@ -1,21 +1,22 @@
-import React, { useEffect ,useState} from 'react'
+import { useEffect ,useState} from 'react'
 import AddResume from './components/AddResume.jsx'
-import { useUser } from '@clerk/clerk-react'
+import { useUser, useAuth } from '@clerk/clerk-react'
 import API from '../../services/API.js';
 import ResumeCardItem from './components/ResumeCardItem.jsx';
+
 function Dashboard() {
   const [resumeList, setResumeList]=useState([]);
   const {user} = useUser();
+  const {getToken} = useAuth();
   
   useEffect(()=>{
     user&&GetResumesList();
   },[user])
 
   const GetResumesList = ()=>{
-    API.getUserResumes(user?.primaryEmailAddress?.emailAddress)
+    API.GetUserResumes(getToken)
     .then(res=>{
-      console.log(res.data);
-      setResumeList(res.data);
+      setResumeList(res.data.data);
     })
   }
   return (
@@ -23,10 +24,10 @@ function Dashboard() {
         <h2 className='font-bold text-3xl'>My Resume</h2>
         <p>Start Creating AI resume</p>
         <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5
-          mt-10 
+          mt-10 gap-3
         '>
           <AddResume />
-          {resumeList.length>0 && resumeList.map((resume, index)=>(
+          {resumeList.length>0 && resumeList.map((resume)=>(
             <ResumeCardItem resume={resume} key={resume.resumeId}/>
           ))}
         </div>
