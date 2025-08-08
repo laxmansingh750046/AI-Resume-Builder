@@ -17,8 +17,8 @@ function EditResume() {
 
   const getResumeInfo = ()=>{
     API.GetResumeById(resumeId, getToken).then(res=>{
-      console.log("res", res);
-    setResumeInfo(res);})
+      console.log("data",res.data.data);
+    setResumeInfo(res.data.data);})
   }
   return (
     <ResumeInfoContext.Provider value={{resumeInfo, setResumeInfo}}>
