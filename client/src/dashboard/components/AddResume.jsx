@@ -10,7 +10,7 @@ import {
 } from "../../components/ui/dialog.jsx";
 import { useState } from "react";
 import {v4 as uuidv4} from 'uuid'
-import { useUser } from "@clerk/clerk-react";
+import { useUser, useAuth } from "@clerk/clerk-react";
 import API from '../../../services/API.js'
 import { useNavigate } from "react-router-dom";
 
@@ -20,27 +20,27 @@ function AddResume() {
   const [loading, setLoading] = useState(false);
   const {user} = useUser();
   const navigation = useNavigate();
+  const {getToken} = useAuth();
 
   const onCreate = ()=>{
     console.log("create resume");
     setLoading(true);
     const uuid = uuidv4();
-    const data = {
-      data: {
+    const data = {      
         title: resumeTitle,
         resumeId: uuid,
         userEmail: user?.primaryEmailAddress?.emailAddress,
         userName: user?.fullName
-      }
     }
-    API.CreateNewResume(data)
+    API.CreateNewResume(data, getToken)
       .then(res=>{
+        console.log(res);
         console.log(res.data.data.documentId)
         if(res){
           navigation('/dashboard/resume/'+res.data.data.documentId+'/edit')
         }
       })
-      .finally(setLoading(false))
+      .finally(()=>setLoading(false))
   }
   return (
     <div>
@@ -57,7 +57,7 @@ function AddResume() {
           <DialogHeader>
             <DialogTitle>Create New Resume</DialogTitle>
             <DialogDescription>
-              <p>Add a title for your new resume</p>
+              <>Add a title for your new resume</>
               <Input className="my-2" 
                 placeholder="Ex.Full Stack resume" 
                 onChange = {(e)=>setResumeTitle(e.target.value)}  

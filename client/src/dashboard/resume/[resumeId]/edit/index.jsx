@@ -1,21 +1,24 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import FormSection from '../../components/FormSection.jsx';
 import ResumePreview from '../../components/ResumePreview.jsx';
 import { ResumeInfoContext } from '../../../../context/ResumeInfoContext.jsx';
-import dummy from '../../../../data/dummy.jsx'
+import { useAuth } from '@clerk/clerk-react';
+import API from '../../../../../services/API.js';
 
 function EditResume() {
   const [resumeInfo, setResumeInfo] = useState();
   const {resumeId} = useParams();
+  const {getToken} = useAuth();
+
   useEffect(()=>{
       getResumeInfo();
   },[])
 
   const getResumeInfo = ()=>{
-    //API.getResumeById(resumeId).then(res=>{
-     // setResumeInfo(res);})
-    
+    API.GetResumeById(resumeId, getToken).then(res=>{
+      console.log("res", res);
+    setResumeInfo(res);})
   }
   return (
     <ResumeInfoContext.Provider value={{resumeInfo, setResumeInfo}}>
