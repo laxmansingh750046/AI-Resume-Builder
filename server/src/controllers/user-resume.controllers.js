@@ -2,77 +2,98 @@ import { Resume } from "../models/resume-model.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
 
+
 export const CreateNewResume = asyncHandler(async (req, res) => {
-    const { firstName, lastName, email } = req.body;
-
+    const { title, userEmail, userName } = req.body;
+    const userId = req.auth?.userId;
+    
+    const names = userName.trim().split(" ");
+    const firstName = names[0];
+    const lastName = names.length > 1 ? names[names.length - 1] : "";
+    
     const newResume = await Resume.create({
+        userId,
+        jobTitle: title,
+        email: userEmail,
         firstName,
-        lastName,
-        email
+        lastName
     });
-
-    res.status(201).json({
-        success: true,
+    
+    return res.status(201).json({
+        data:{success: true,
         message: "Resume created successfully",
-        data: newResume
+        documentId: newResume._id}
     });
 });
 
 
 export const GetUserResumes = asyncHandler(async (req, res) => {
-    const resumes = await Resume.find();
+    const userId = req.auth?.userId;
+    if(!userId){
+      return res.status(401).json({
+        success: false,
+        message: "userid not found"
+      });
+    }
 
-    res.status(200).json({
+    const userResumes = await Resume.find({userId})
+        .select("_id themeColor jobTitle")
+        .lean();
+
+    const formattedResumes = userResumes.map((resume) => ({
+      resumeId: resume._id,
+      themeColor: resume.themeColor,
+      title: resume.jobTitle
+    }));
+    
+    return res.status(200).json({
         success: true,
-        count: resumes.length,
-        data: resumes
+        message: "User resumes retrieved successfully",
+        data: formattedResumes,
     });
 });
 
 
-export const GetResumeById = asyncHandler(async (req, res) => {
-    const resume = await Resume.findById(req.params.id);
+export  const GetResumeById = asyncHandler(async (req, res) => {
+  const resumeId = req.params.id;
+  const userId = req.auth.userId;
 
-    if (!resume) {
-        res.status(404);
-        throw new Error("Resume not found");
-    }
-
-    res.status(200).json({
-        success: true,
-        data: resume
+  if (!userId) {
+    return res.status(401).json({
+      success: false,
+      message: "Unauthorized. User ID not found.",
     });
+  }
+
+  const resume = await Resume.findOne({ _id: resumeId, userId });
+
+  if (!resume) {
+    return res.status(404).json({
+      success: false,
+      message: "Resume not found or does not belong to the user.",
+    });
+  }
+
+  return res.status(200).json({
+    success: true,
+    message: "Resume fetched successfully",
+    data: resume,
+  });
 });
 
 
 export const UpdateResumeDetail = asyncHandler(async (req, res) => {
-    const updatedResume = await Resume.findByIdAndUpdate(req.params.id, req.body, {
-        new: true,
-        runValidators: true
-    });
-
-    if (!updatedResume) {
-        res.status(404);
-        throw new Error("Resume not found for update");
-    }
-
-    res.status(200).json({
+    
+    return res.status(200).json({
         success: true,
-        message: "Resume updated successfully",
-        data: updatedResume
+        message: "Resume updated successfully"
     });
 });
 
 
 export const DeleteResumeById = asyncHandler(async (req, res) => {
-    const deleted = await Resume.findByIdAndDelete(req.params.id);
 
-    if (!deleted) {
-        res.status(404);
-        throw new Error("Resume not found for deletion");
-    }
-
-    res.status(200).json({
+    return res.status(200).json({
         success: true,
         message: "Resume deleted successfully"
     });
