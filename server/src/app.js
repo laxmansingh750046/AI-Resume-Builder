@@ -17,6 +17,6 @@ app.use(cookieParser());
 
 import userRoutes from './routes/user-resumes.routes.js';
 
-app.use("api/user-resumes", userRoutes)
+app.use("/api/user-resumes", userRoutes)
 
 export  {app};
