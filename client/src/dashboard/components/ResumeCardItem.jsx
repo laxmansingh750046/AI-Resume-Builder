@@ -67,7 +67,7 @@ function ResumeCardItem({resume,refreshData}) {
           
           <DropdownMenu>
               <DropdownMenuTrigger>
-                <MoreVertical className='h-4 w-4 cursor-pointer'/>
+                <MoreVertical className='h-4 w-4 cursor-pointer text-black'/>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
             
