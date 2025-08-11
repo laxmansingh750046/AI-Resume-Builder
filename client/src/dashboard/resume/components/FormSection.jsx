@@ -37,28 +37,20 @@ function FormSection() {
         </div>
         {/* Personal Detail  */}
         {activeFormIndex==1?  
-        <PersonalDetail enabledNext={(v)=>setEnableNext(v)} />
+        <PersonalDetail enabledNext={setEnableNext}/>
         :activeFormIndex==2?
-              <Summery  enabledNext={(v)=>setEnableNext(v)} />
+        <Education/>
         :activeFormIndex==3?
-          <Experience />  
+        <Experience />  
         :activeFormIndex==4?
-          <Education/>
+        <Skills/>
         :activeFormIndex==5?
-          <Skills/>
+        <Summery enabledNext={setEnableNext}/>
         :activeFormIndex==6?
-          <Navigate to={'/my-resume/'+resumeId+"/view"}/>
+        <Navigate to={'/my-resume/'+resumeId+"/view"}/>
               
         :null
           }
-        
-
-      {/* Experience  */}
-
-      {/* Educational Detail  */}
-
-      {/* Skills  */}
-
     </div>
   )
 }

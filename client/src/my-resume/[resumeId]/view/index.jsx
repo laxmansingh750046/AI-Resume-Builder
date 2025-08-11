@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Header from '../../../components/custom/Header'
 import { Button } from '../../../components/ui/button'
 import ResumePreview from '../../../dashboard/resume/components/ResumePreview'
 import { ResumeInfoContext } from '../../../context/ResumeInfoContext'
 import { useParams } from 'react-router-dom'
+import API from '../../../../services/API'
 
 function ViewResume() {
   const [resumeInfo, setResumeInfo] = useState();
@@ -13,7 +14,7 @@ function ViewResume() {
     getResumeInfo();
   },[])
   const getResumeInfo =()=>{
-    API.getResumeById(resumeId).then(res=>{
+    API.GetResumeById(resumeId).then(res=>{
         console.log(res);
     })
   }
