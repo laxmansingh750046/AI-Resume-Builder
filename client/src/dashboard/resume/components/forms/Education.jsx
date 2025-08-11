@@ -5,11 +5,16 @@ import { Textarea } from "../../../../components/ui/textarea.jsx";
 import { Button } from "../../../../components/ui/button";
 import { ResumeInfoContext } from "../../../../context/ResumeInfoContext.jsx";
 import { useParams } from "react-router-dom";
+import { useAuth } from '@clerk/clerk-react';
+import API from "../../../../../services/API.js";
+import { toast } from "sonner";
+
+
 
 function Education() {
   const [educationalList, setEducationalList] = useState([
     {
-      UniversityName: "",
+      universityName: "",
       degree: "",
       major: "",
       startDate: "",
@@ -20,6 +25,7 @@ function Education() {
   const [loading, setLoading] = useState(false);
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
   const params = useParams();
+  const { getToken } = useAuth();
 
   useEffect(() => {
     resumeInfo && setEducationalList(resumeInfo?.education);
@@ -36,7 +42,7 @@ function Education() {
     setEducationalList([
       ...educationalList,
       {
-        UniversityName: "",
+        universityName: "",
         degree: "",
         major: "",
         startDate: "",
@@ -51,15 +57,13 @@ function Education() {
   };
 
   const onSave = () => {
-    setLoading(true);
+    setLoading(true);   
     const data = {
       data: {
-        Experience: experinceList.map(({ id, ...rest }) => rest),
+        education: educationalList.map(({ id, ...rest }) => rest),
       },
     };
-
-    console.log(experinceList);
-    API.UpdateResumeDetail(params?.resumeId, data).then(
+    API.UpdateResumeDetail(params?.resumeId, data, getToken).then(
       (res) => {
         console.log(res);
         setLoading(false);
@@ -88,11 +92,12 @@ function Education() {
             <div key={index}>
               <div className="grid grid-cols-2 gap-3 border p-3 my-5 rounded-lg">
                 <div className="col-span-2">
+                  <University className="inline pr-2"/>
                   <label>University Name</label>
                   <Input
                     name="universityName"
                     onChange={(e) => handleChange(e, index)}
-                    defaultValue = {item?.UniversityName}
+                    defaultValue = {item?.universityName}
                   />
                 </div>
                 <div>

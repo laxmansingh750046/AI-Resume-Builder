@@ -18,6 +18,7 @@ const formField={
     workSummery:'',
 
 }
+
 function Experience() {
     const [experinceList,setExperinceList]=useState([formField]);
     const {resumeInfo,setResumeInfo}=useContext(ResumeInfoContext);
@@ -25,19 +26,18 @@ function Experience() {
     const [loading,setLoading]=useState(false);
 
     useEffect(()=>{
-        resumeInfo?.experience.length>0&&setExperinceList(resumeInfo?.experience)
-    },[])
+        resumeInfo?.experience?.length>0&&setExperinceList(resumeInfo?.experience)
+    },[resumeInfo])
 
     const handleChange=(index,event)=>{
         const newEntries=experinceList.slice();
         const {name,value}=event.target;
         newEntries[index][name]=value;
-        console.log(newEntries)
         setExperinceList(newEntries);
+        setResumeInfo({...resumeInfo, experience:experinceList });
     }
 
     const AddNewExperience=()=>{
-    
         setExperinceList([...experinceList,formField])
     }
 
@@ -45,27 +45,19 @@ function Experience() {
         setExperinceList(experinceList=>experinceList.slice(0,-1))
     }
 
-    const handleRichTextEditor=(e,name,index)=>{
+    const handleRichTextEditor=(e,name,index,value)=>{
         const newEntries=experinceList.slice();
-        newEntries[index][name]=e.target.value;
-       
+        if(e) newEntries[index][name]=e.target.value;
+        else newEntries[index][name] = value;
         setExperinceList(newEntries);
+        setResumeInfo({...resumeInfo, experience:experinceList });
     }
-
-    useEffect(()=>{
-        setResumeInfo({
-            ...resumeInfo,
-            Experience:experinceList
-        });
-     
-    },[experinceList]);
-
 
     const onSave=()=>{
         setLoading(true)
         const data={
             data:{
-                Experience:experinceList.map(({ id, ...rest }) => rest)
+                experience:experinceList.map(({ id, ...rest }) => rest)
             }
         }
 
@@ -130,11 +122,12 @@ function Experience() {
                             />
                         </div>
                         <div className='col-span-2'>
-                           {/* Work Summery  */}
                            <RichTextEditor
-                           index={index}
-                           defaultValue={item?.workSummery}
-                           onRichTextEditorChange={(event)=>handleRichTextEditor(event,'workSummery',index)}  />
+                                jobTitle = {experinceList[index]['title']}
+                                index={index}
+                                defaultValue={item?.workSummery}
+                                onRichTextEditorChange={(event,val=null)=>handleRichTextEditor(event,'workSummery',index,val)}  
+                            />
                         </div>
                     </div>
                 </div>

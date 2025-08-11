@@ -6,6 +6,7 @@ import { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import {default as API} from '../../../../../services/API.js';
 import { toast } from 'sonner';
+import { useAuth } from '@clerk/clerk-react';
 
 function PersonalDetail({enabledNext}) {
 
@@ -14,10 +15,8 @@ function PersonalDetail({enabledNext}) {
 
     const [formData,setFormData]=useState();
     const [loading,setLoading]=useState(false);
-    useEffect(()=>{
-        console.log("---",resumeInfo)
-    },[])
-
+    const { getToken } = useAuth();
+    
     const handleInputChange=(e)=>{
         enabledNext(false)
         const {name,value}=e.target;
@@ -38,7 +37,7 @@ function PersonalDetail({enabledNext}) {
         const data={
             data:formData
         }
-        API.updateResumeDetails(params?.resumeId,data).then(resp=>{
+        API.UpdateResumeDetail(params?.resumeId,data, getToken).then(resp=>{
             console.log(resp);
             enabledNext(true);
             setLoading(false);
