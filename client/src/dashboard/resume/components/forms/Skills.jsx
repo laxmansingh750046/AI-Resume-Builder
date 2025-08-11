@@ -4,16 +4,24 @@ import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
 import { LoaderCircle } from "lucide-react";
 import { ResumeInfoContext } from "../../../../context/ResumeInfoContext";
+import { Button } from "../../../../components/ui/button";
+import { useAuth } from '@clerk/clerk-react'
+import API from "../../../../../services/API";
+import { useParams } from "react-router-dom";
+import { toast } from "sonner";
 
 function Skills() {
   const [skillsList, setSkillsList] = useState([
     {
       name: "",
       rating: 0,
-    },
+    }
   ]);
+  
   const [loading, setLoading] = useState(false);
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
+  const { getToken } = useAuth();
+  const params = useParams();
 
   useEffect(() => {
     resumeInfo && setSkillsList(resumeInfo?.skills);
@@ -28,7 +36,6 @@ function Skills() {
   const AddNewSkills = () => {
     setSkillsList([
       ...skillsList,
-      ,
       {
         name: "",
         rating: 0,
@@ -40,7 +47,21 @@ function Skills() {
     setSkillsList((skillsList) => skillsList.slice(0, -1));
   };
 
-  const onSave = () => {};
+  const onSave = () => {
+     setLoading(true)
+     const data={
+        data: {skills:skillsList.map(({id, ...rest})=>rest)}
+     }
+     API.UpdateResumeDetail(params?.resumeId, data, getToken).then(
+      (res)=>{
+        setLoading(false);
+        toast("Details updated !");
+      },
+      (error)=>{
+        setLoading(false);
+      }
+     )
+  };
 
   useEffect(() => {
     setResumeInfo({
@@ -56,14 +77,14 @@ function Skills() {
         <p>Add Your top Professional skills</p>
       </div>
       <div>
-        {skillsList.map((item, index) => (
-          <div className="flex justify-between mb-2 border rounded-lg p-3">
+        {skillsList?.map((item, index) => (
+          <div key={index} className="flex justify-between mb-2 border rounded-lg p-3">
             <div>
               <label className="text-xs">Name</label>
               <Input
                 className="w-full"
                 onChange={(e) => handleChange(index, "name", e.target.value)}
-                defaultValue = {item.name}
+                defaultValue = {item?.name}
               />
             </div>
             <Rating
