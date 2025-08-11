@@ -76,10 +76,33 @@ export  const GetResumeById = asyncHandler(async (req, res) => {
 
 
 export const UpdateResumeDetail = asyncHandler(async (req, res) => {
-    
+    const resumeId = req.params.id;
+    const updateData = req.body.data;
+
+     if (!resumeId) {
+        return res.status(400).json({
+            success: false,
+            message: "Resume ID is required"
+        });
+    }
+
+    const updateResume = await Resume.findByIdAndUpdate(
+      resumeId,
+      {$set: updateData},
+      {new: true, runValidators: true}
+    )
+
+    if(!updateResume){
+      return res.status(404).json({
+        success: false,
+        message: "resume not found"
+      });
+    }
+
     return res.status(200).json({
         success: true,
-        message: "Resume updated successfully"
+        message: "Resume updated successfully",
+        data: updateResume
     });
 });
 
