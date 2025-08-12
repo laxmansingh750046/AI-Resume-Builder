@@ -28,7 +28,7 @@ function Dashboard() {
         '>
           <AddResume />
           {resumeList.length>0 && resumeList.map((resume)=>(
-            <ResumeCardItem resume={resume} key={resume.resumeId}/>
+            <ResumeCardItem resume={resume} key={resume.resumeId} refreshData={GetResumesList}/>
           ))}
         </div>
     </div>

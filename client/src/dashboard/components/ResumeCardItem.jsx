@@ -19,18 +19,19 @@ import {
 } from "../../components/ui/alert-dialog"
 import API from './../../../services/API.js'
 import { toast } from 'sonner'
+import { useAuth } from '@clerk/clerk-react'
 
 function ResumeCardItem({resume,refreshData}) {
   const navigation=useNavigate();
   const [openAlert,setOpenAlert]=useState(false);
   const [loading,setLoading]=useState(false);
+  const { getToken } = useAuth();
 
   const onDelete=()=>{
     setLoading(true);
-    API.DeleteResumeById(resume.resumeId).then(resp=>{
-      console.log(resp);
+    API.DeleteResumeById(resume.resumeId, getToken).then(resp=>{
       toast('Resume Deleted!');
-      refreshData()
+      if(refreshData)refreshData();
       setLoading(false);
       setOpenAlert(false);
     },(error)=>{

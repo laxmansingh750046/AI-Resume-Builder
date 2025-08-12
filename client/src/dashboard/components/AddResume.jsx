@@ -23,7 +23,6 @@ function AddResume() {
   const {getToken} = useAuth();
 
   const onCreate = ()=>{
-    console.log("create resume");
     setLoading(true);
     const uuid = uuidv4();
     const data = {      
@@ -34,8 +33,6 @@ function AddResume() {
     }
     API.CreateNewResume(data, getToken)
       .then(res=>{
-        console.log(res);
-        console.log(res.data.data.documentId)
         if(res){
           navigation('/dashboard/resume/'+res.data.data.documentId+'/edit')
         }

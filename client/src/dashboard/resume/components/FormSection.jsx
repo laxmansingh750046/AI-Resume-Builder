@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import PersonalDetail from './forms/PersonalDetail'
 import { Button } from '../../../components/ui/button.jsx'
 import { ArrowLeft, ArrowRight, Home, LayoutGrid } from 'lucide-react'
