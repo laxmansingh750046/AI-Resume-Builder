@@ -108,9 +108,27 @@ export const UpdateResumeDetail = asyncHandler(async (req, res) => {
 
 
 export const DeleteResumeById = asyncHandler(async (req, res) => {
+    const resumeId = req.params.id;
+
+    if (!resumeId) {
+        return res.status(400).json({
+            success: false,
+            message: "Resume ID is required"
+        });
+    }
+
+    const deletedResume = await Resume.findByIdAndDelete(resumeId);
+
+    if (!deletedResume) {
+        return res.status(404).json({
+            success: false,
+            message: "Resume not found"
+        });
+    }
 
     return res.status(200).json({
         success: true,
-        message: "Resume deleted successfully"
+        message: "Resume deleted successfully",
+        data: deletedResume
     });
 });
