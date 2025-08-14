@@ -188,10 +188,10 @@ function AddResume() {
                 className="mt-3 cursor-pointer border border-blue-300 rounded px-3 py-2 bg-white hover:border-blue-500 transition"
                 onChange={(e) => setResumeFile(e.target.files[0])}
               /> */}
-              Or paste your resume text
+              Or paste your old resume text
               <textarea
                 className="w-full h-40 mt-2 border border-blue-300 rounded p-3 bg-white hover:border-blue-500 transition"
-                placeholder="Paste your resume text here..."
+                placeholder="Copy the text from your old resume  and paste it here"
                 onChange={(e) => setResumeText(e.target.value)}
               />
             </DialogDescription>
