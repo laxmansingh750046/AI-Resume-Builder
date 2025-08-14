@@ -82,8 +82,9 @@ function Home() {
           Start Building Now
         </Link>
       </section>
-
+   
       <footer className="bg-gray-900 text-gray-400 py-6 text-center text-sm">
+        <About />
         © {new Date().getFullYear()} AI Resume Builder. All rights reserved.
       </footer>
     </div>
@@ -96,6 +97,60 @@ function FeatureCard({ icon, title, description }) {
       <div className="flex justify-center">{icon}</div>
       <h3 className="mt-4 text-xl font-semibold text-gray-900">{title}</h3>
       <p className="mt-2 text-gray-600">{description}</p>
+    </div>
+  );
+}
+
+function About() {
+  return (
+    <div className=" mx-auto p-6 bg-slate-800 rounded-lg flex flex-col items-center">
+      <h1 className="text-3xl font-bold text-purple-500 mb-4">About Me</h1>
+      <p className="text-gray-300 mb-4 text-center">
+        Hi! I'm <span className="font-semibold text-white">Laxman Singh Bisht</span>, a passionate full-stack developer who loves crafting 
+        clean, user-friendly, and impactful web applications. Currently, I’m focused on 
+        building tools that make people’s lives easier — like this AI Resume Builder.
+      </p>
+
+      <h2 className="text-xl font-semibold text-white mt-6 mb-2">Why I Built This</h2>
+      <p className="text-gray-300 mb-4 text-justify">
+        Creating a professional resume can be time-consuming and stressful, especially for 
+        those without design or formatting skills. I built this AI Resume Builder to 
+        simplify that process — allowing users to generate ATS-friendly, 
+        beautifully formatted resumes in minutes. This project combines my 
+        skills in full-stack development with my interest in AI-powered automation 
+        to deliver a seamless and accessible experience for job seekers worldwide.
+      </p>
+
+      <h2 className="text-xl font-semibold text-white mt-6 mb-2">Tech Stack</h2>
+      <ul className="pl-5 text-gray-300">
+        <li>Frontend: React, Tailwind CSS</li>
+        <li>Backend: Node.js, Express.js</li>
+        <li>Database: MongoDB with Mongoose</li>
+        <li>Authentication: Clerk for secure sign-in/sign-up</li>
+        <li>AI Integration: OpenAI API for content generation</li>
+        <li>File Handling: PDF/Docx export functionality</li>
+        <li>Deployment: Vercel (Frontend) & Render (Backend)</li>
+        <li>Version Control: Git & GitHub</li>
+      </ul>
+
+      <div className="mt-8 flex flex-col items-center gap-2">
+        <a 
+          href="https://portfolio-jet-kappa-56.vercel.app/" 
+          className="text-purple-400 hover:underline"
+          target="_blank" 
+          rel="noopener noreferrer"
+        >
+          Visit my portfolio →
+        </a>
+        <a 
+          href="https://www.linkedin.com/in/laxman-singh-bisht-437058268/" 
+          className="text-blue-400 hover:underline"
+          target="_blank" 
+          rel="noopener noreferrer"
+        >
+          Connect on LinkedIn →
+        </a>
+      </div>
     </div>
   );
 }
