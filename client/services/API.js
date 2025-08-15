@@ -7,7 +7,7 @@ const axiosClient = (getToken) => {
   });
 
   instance.interceptors.request.use(async (config) => {
-    if (getToken) {
+    if (typeof getToken  === "function") {
       const token = await getToken();
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
@@ -25,6 +25,10 @@ const GetUserResumes = (getToken) => axiosClient(getToken).get('/user-resumes');
 const GetResumeById = (id,getToken) => axiosClient(getToken).get(`/user-resumes/${id}`);
 const UpdateResumeDetail = (id, data,getToken) => axiosClient(getToken).put(`/user-resumes/${id}`, data);
 const DeleteResumeById = (id,getToken) => axiosClient(getToken).delete(`/user-resumes/${id}`);
+const AIChatSession = async(prompt) => {
+    const resp = await axiosClient().post('/ai/generate', {prompt});
+     return resp.data.text;
+}
 
 export default {
   CreateNewResume,
@@ -32,4 +36,5 @@ export default {
   GetResumeById,
   UpdateResumeDetail,
   DeleteResumeById,
+  AIChatSession
 };
