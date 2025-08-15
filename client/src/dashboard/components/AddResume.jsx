@@ -16,7 +16,16 @@ import { useNavigate } from "react-router-dom";
 const promptBase = `
 You are an AI that reads resumes in plain text and extracts:
 - firstName, lastName, jobTitle, address, phone, email, summery
-- experience[] {title, companyName, city, state, startDate, endDate, currentlyWorking, workSummery}
+- experience[] {
+    title, 
+    companyName, 
+    city, 
+    state, 
+    startDate, 
+    endDate, 
+    currentlyWorking, 
+    workSummery (must be returned as a complete HTML <ul> list with <li> bullet points describing responsibilities/achievements)
+  }
 - education[] {universityName, startDate, endDate, degree, major, description}
 - skills[] {name, rating: (1-5)}
 Return ONLY raw JSON in this exact schema with no code fences, no markdown, and no extra text:
@@ -33,6 +42,7 @@ Return ONLY raw JSON in this exact schema with no code fences, no markdown, and 
   skills: []
 }
 `;
+
 function AddResume() {
   const [openDialog, setOpenDialog] = useState(false);
   const [resumeTitle, setResumeTitle] = useState("");
@@ -80,8 +90,12 @@ function AddResume() {
       );
       const docId = createRes.data.data.documentId;
 
-      const aiResult = await API.AIChatSession(promptBase + "\n" + resumeText);
-
+      let aiResult = await API.AIChatSession(promptBase + "\n" + resumeText);
+      if (aiResult.startsWith("```")) {
+        aiResult = aiResult
+          .replace(/^```[a-z]*\n?/i, "")
+          .replace(/\n?```$/, "");
+      }
       let parsedData;
       try {
         parsedData = JSON.parse(aiResult);
@@ -205,11 +219,7 @@ function AddResume() {
               </Button>
               {resumeText ? (
                 <Button disabled={loading} onClick={onPasteResume}>
-                  {loading ? (
-                    <Loader2 className="animate-spin" />
-                  ) : (
-                    "Create"
-                  )}
+                  {loading ? <Loader2 className="animate-spin" /> : "Create"}
                 </Button>
               ) : (
                 <Button disabled={!resumeTitle || loading} onClick={onCreate}>

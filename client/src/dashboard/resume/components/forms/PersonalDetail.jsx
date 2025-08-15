@@ -38,7 +38,6 @@ function PersonalDetail({enabledNext}) {
             data:formData
         }
         API.UpdateResumeDetail(params?.resumeId,data, getToken).then(resp=>{
-            console.log(resp);
             enabledNext(true);
             setLoading(false);
             toast("Details updated")
