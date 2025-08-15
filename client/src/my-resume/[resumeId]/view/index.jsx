@@ -25,7 +25,6 @@ function ViewResume() {
 
   const handleDownload = ()=>{
     window.print();
-
   }
   return (
     <ResumeInfoContext.Provider value={{resumeInfo, setResumeInfo}}>
