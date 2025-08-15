@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 
 const promptBase = `
 You are an AI that reads resumes in plain text and extracts:
-- firstName, lastName, jobTitle, address, phone, email, summery
+- firstName, lastName, jobTitle, address, phone, email, summery (if not explicitly provided, create a concise professional summary of 3–4 lines based on the candidate's experience, skills, and job title)
 - experience[] {
     title, 
     companyName, 
@@ -24,7 +24,7 @@ You are an AI that reads resumes in plain text and extracts:
     startDate, 
     endDate, 
     currentlyWorking, 
-    workSummery (must be returned as a complete HTML <ul> list with <li> bullet points describing responsibilities/achievements)
+    workSummery (must be returned as a complete HTML <ul class="list-disc list-inside"> list with <li> bullet points describing responsibilities/achievements)
   }
 - education[] {universityName, startDate, endDate, degree, major, description}
 - skills[] {name, rating: (1-5)}
