@@ -2,23 +2,29 @@
 @import "tw-animate-css";
 
 
-@media print{
-  #no-print{
+@media print {
+  #no-print {
     display: none;
   }
 
-  #print-area{
+  #print-area {
     display: block;
   }
 
-  body{
+  body {
     margin: 0;
     padding: 0;
     box-shadow: none;
   }
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
 }
 
-@page{
+@page {
   size: auto;
   margin: 0mm;
 }
@@ -40,6 +46,7 @@
 }
 
 @custom-variant dark (&:is(.dark *));
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -151,6 +158,7 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
