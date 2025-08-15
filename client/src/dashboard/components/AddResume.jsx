@@ -12,7 +12,6 @@ import { useState } from "react";
 import { useUser, useAuth } from "@clerk/clerk-react";
 import API from "../../../services/API.js";
 import { useNavigate } from "react-router-dom";
-import { AIChatSession } from "../../../services/AIModal.js";
 
 const promptBase = `
 You are an AI that reads resumes in plain text and extracts:
@@ -81,7 +80,7 @@ function AddResume() {
       );
       const docId = createRes.data.data.documentId;
 
-      const aiResult = await AIChatSession(promptBase + "\n" + resumeText);
+      const aiResult = await API.AIChatSession(promptBase + "\n" + resumeText);
 
       let parsedData;
       try {

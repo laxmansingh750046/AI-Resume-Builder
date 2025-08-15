@@ -2,8 +2,8 @@ import { Button } from '../../../components/ui/button.jsx';
 import { ResumeInfoContext } from '../../../context/ResumeInfoContext.jsx';
 import { Brain, LoaderCircle } from 'lucide-react';
 import { useContext, useState } from 'react'
-import { BtnBold, BtnBulletList, BtnClearFormatting, BtnItalic, BtnLink, BtnNumberedList, BtnStrikeThrough, BtnStyles, BtnUnderline, Editor, EditorProvider, HtmlButton, Separator, Toolbar } from 'react-simple-wysiwyg'
-import { AIChatSession } from './../../../../services/AIModal.js';
+import { BtnBold, BtnBulletList, BtnItalic, BtnLink, BtnNumberedList, BtnStrikeThrough, BtnStyles, BtnUnderline, Editor, EditorProvider, HtmlButton, Separator, Toolbar } from 'react-simple-wysiwyg'
+import API from './../../../../services/API.js';
 import { toast } from 'sonner';
 
 const PROMPT = `
@@ -14,7 +14,6 @@ const PROMPT = `
   `;
 function RichTextEditor({jobTitle,onRichTextEditorChange,index,defaultValue}) {
     const [value,setValue]=useState(defaultValue);
-    const {resumeInfo,setResumeInfo}=useContext(ResumeInfoContext)
     const [loading,setLoading]=useState(false);
     
     const GenerateSummeryFromAI=async()=>{
@@ -25,8 +24,7 @@ function RichTextEditor({jobTitle,onRichTextEditorChange,index,defaultValue}) {
       setLoading(true)
       const prompt=PROMPT.replace('{positionTitle}',jobTitle);
       
-      const result=await AIChatSession(prompt);
-      console.log("result", result);
+      const result=await API.AIChatSession(prompt);
       setValue(result);
       onRichTextEditorChange(null,result);
       setLoading(false);

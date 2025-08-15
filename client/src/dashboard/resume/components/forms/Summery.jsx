@@ -3,10 +3,9 @@ import { Textarea } from "../../../../components/ui/textarea.jsx";
 import { ResumeInfoContext } from "../../../../context/ResumeInfoContext.jsx";
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { default as API } from "../../../../../services/API.js";
+import API from "../../../../../services/API.js";
 import { Brain, LoaderCircle } from "lucide-react";
 import { toast } from "sonner";
-import { AIChatSession } from "../../../../../services/AIModal.js";
 import { useAuth } from '@clerk/clerk-react';
 
 
@@ -81,7 +80,7 @@ function Summery({ enabledNext }) {
 
     
     try {
-      const aiResponseText = await AIChatSession(PROMPT);
+      const aiResponseText = await API.AIChatSession(PROMPT);
       setSummery(aiResponseText);
     } catch (error) {
       console.error("Error generating summary:", error);
