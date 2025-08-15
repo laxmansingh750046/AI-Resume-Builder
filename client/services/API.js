@@ -21,10 +21,10 @@ const axiosClient = (getToken) => {
 
 
 const CreateNewResume = async(data,getToken) => await axiosClient(getToken).post('/user-resumes', data);
-const GetUserResumes = (getToken) => axiosClient(getToken).get('/user-resumes');
-const GetResumeById = (id,getToken) => axiosClient(getToken).get(`/user-resumes/${id}`);
-const UpdateResumeDetail = (id, data,getToken) => axiosClient(getToken).put(`/user-resumes/${id}`, data);
-const DeleteResumeById = (id,getToken) => axiosClient(getToken).delete(`/user-resumes/${id}`);
+const GetUserResumes = async(getToken) => await axiosClient(getToken).get('/user-resumes');
+const GetResumeById = async(id,getToken) => await axiosClient(getToken).get(`/user-resumes/${id}`);
+const UpdateResumeDetail = async(id, data,getToken) => await axiosClient(getToken).put(`/user-resumes/${id}`, data);
+const DeleteResumeById = async(id,getToken) => await axiosClient(getToken).delete(`/user-resumes/${id}`);
 const AIChatSession = async(prompt) => {
     const resp = await axiosClient().post('/ai/generate', {prompt});
      return resp.data.text;
