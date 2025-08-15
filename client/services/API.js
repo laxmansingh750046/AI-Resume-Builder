@@ -20,7 +20,7 @@ const axiosClient = (getToken) => {
 };
 
 
-const CreateNewResume = (data,getToken) => axiosClient(getToken).post('/user-resumes', data);
+const CreateNewResume = async(data,getToken) => await axiosClient(getToken).post('/user-resumes', data);
 const GetUserResumes = (getToken) => axiosClient(getToken).get('/user-resumes');
 const GetResumeById = (id,getToken) => axiosClient(getToken).get(`/user-resumes/${id}`);
 const UpdateResumeDetail = (id, data,getToken) => axiosClient(getToken).put(`/user-resumes/${id}`, data);
