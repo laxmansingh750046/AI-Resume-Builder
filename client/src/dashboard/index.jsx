@@ -27,7 +27,7 @@ function Dashboard() {
           mt-10 gap-3
         '>
           <AddResume />
-          {resumeList.length>0 && resumeList.map((resume)=>(
+          {resumeList?.length>0 && resumeList.map((resume)=>(
             <ResumeCardItem resume={resume} key={resume.resumeId} refreshData={GetResumesList}/>
           ))}
         </div>
