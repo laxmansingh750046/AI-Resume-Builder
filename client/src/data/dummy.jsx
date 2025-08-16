@@ -82,5 +82,27 @@ export default{
             name:'React Native',
             rating:100,
         }
+    ],
+    projects: [
+        {
+            _id: 1,
+            name: 'E-Commerce Platform',
+            description: 'Developed a scalable e-commerce platform with integrated payment gateway and admin dashboard for inventory management.',
+            technologies: ['React', 'Node.js', 'MongoDB', 'Stripe API'],
+            link: 'https://github.com/jamescarter/ecommerce-platform',
+            startDate: 'Feb 2022',
+            endDate: 'Aug 2022',
+            currentlyWorking: false
+        },
+        {
+            _id: 2,
+            name: 'Real-Time Chat Application',
+            description: 'Built a secure, real-time chat app with group messaging, media sharing, and online status tracking.',
+            technologies: ['React', 'Socket.io', 'Express', 'MongoDB'],
+            link: 'https://github.com/jamescarter/chat-app',
+            startDate: 'Sep 2022',
+            endDate: '',
+            currentlyWorking: true
+        }
     ]
 }
