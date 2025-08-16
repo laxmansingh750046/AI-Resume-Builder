@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom'
 import API from './../../../../../services/API.js'
 import { toast } from 'sonner'
 import { LoaderCircle } from 'lucide-react'
+import { useAuth } from '@clerk/clerk-react'
 
 const formField={
     title:'',
@@ -24,6 +25,7 @@ function Experience() {
     const {resumeInfo,setResumeInfo}=useContext(ResumeInfoContext);
     const params=useParams();
     const [loading,setLoading]=useState(false);
+    const { getToken } = useAuth();
 
     useEffect(()=>{
         resumeInfo?.experience?.length>0&&setExperinceList(resumeInfo?.experience)
@@ -63,7 +65,7 @@ function Experience() {
 
          console.log(experinceList)
 
-        API.UpdateResumeDetail(params?.resumeId,data).then(res=>{
+        API.UpdateResumeDetail(params?.resumeId,data, getToken).then(res=>{
             console.log(res);
             setLoading(false);
             toast('Details updated !')
