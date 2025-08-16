@@ -28,6 +28,7 @@ You are an AI that reads resumes in plain text and extracts:
   }
 - education[] {universityName, startDate, endDate, degree, major, description}
 - skills[] {name, rating: (1-5)}
+- projects[] { name, description, technologies,link, startDate,endDate , currentlyWorking: Boolean}
 Return ONLY raw JSON in this exact schema with no code fences, no markdown, and no extra text:
 {
   firstName: "",
@@ -39,7 +40,8 @@ Return ONLY raw JSON in this exact schema with no code fences, no markdown, and 
   summery: "",
   experience: [],
   education: [],
-  skills: []
+  skills: [],
+  projects: []
 }
 `;
 

@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import PersonalDetail from './forms/PersonalDetail'
 import { Button } from '../../../components/ui/button.jsx'
-import { ArrowLeft, ArrowRight, Home, LayoutGrid } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Home } from 'lucide-react'
 import Summery from './forms/Summery.jsx';
 import Experience from './forms/Experience.jsx';
 import Education from './forms/Education.jsx';
+import Projects from './forms/Project.jsx';
 import Skills from './forms/Skills.jsx';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import ThemeColor from './ThemeColor';
@@ -45,8 +46,10 @@ function FormSection() {
         :activeFormIndex==4?
         <Skills/>
         :activeFormIndex==5?
-        <Summery enabledNext={setEnableNext}/>
+        <Projects/>
         :activeFormIndex==6?
+        <Summery enabledNext={setEnableNext}/>
+        :activeFormIndex==7?
         <Navigate to={'/my-resume/'+resumeId+"/view"}/>
               
         :null

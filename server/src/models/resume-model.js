@@ -25,6 +25,16 @@ const skillSchema = new mongoose.Schema({
   rating: Number,
 });
 
+const projectSchema = new mongoose.Schema({
+  name: String,
+  description: String, 
+  technologies: [String], 
+  link: String, 
+  startDate: String,
+  endDate: String,
+  currentlyWorking: Boolean
+});
+
 const resumeSchema = new mongoose.Schema({
   userId: {
     type: String,
@@ -41,6 +51,7 @@ const resumeSchema = new mongoose.Schema({
   experience: [experienceSchema],
   education: [educationSchema],
   skills: [skillSchema],
+  projects: [projectSchema],
 }, {
   timestamps: true,
 });
