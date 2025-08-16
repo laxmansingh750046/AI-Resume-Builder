@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../components/custom/Header.jsx";
 import { ArrowRight, Sparkles, FileText, Rocket } from "lucide-react";
 import { Link } from "react-router-dom";
+import API from "../../services/API.js";
 
 function Home() {
+  useEffect(()=>{API.Check()},[])
   return (
     <div className="bg-gradient-to-b from-white to-gray-100 min-h-screen flex flex-col">
       <Header />

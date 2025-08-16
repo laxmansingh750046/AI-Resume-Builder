@@ -29,6 +29,7 @@ const AIChatSession = async(prompt) => {
     const resp = await axiosClient().post('/ai/generate', {prompt});
      return resp.data.text;
 }
+const Check = async() => await axiosClient().get('/check');
 
 export default {
   CreateNewResume,
@@ -36,5 +37,6 @@ export default {
   GetResumeById,
   UpdateResumeDetail,
   DeleteResumeById,
-  AIChatSession
+  AIChatSession,
+  Check
 };
