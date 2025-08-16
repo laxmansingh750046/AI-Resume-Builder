@@ -20,5 +20,8 @@ import aiRoutes from './routes/ai.routes.js'
 
 app.use("/api/user-resumes", userRoutes)
 app.use("/api/ai", aiRoutes);
+app.use("/api/check", (req, res) => {
+  res.json({ success: true });
+});
 
 export  {app};
