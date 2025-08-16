@@ -1,20 +1,26 @@
 import { Button } from "../../../../components/ui/button.jsx";
 import { Textarea } from "../../../../components/ui/textarea.jsx";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../../../../components/ui/select.jsx";
 import { ResumeInfoContext } from "../../../../context/ResumeInfoContext.jsx";
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import API from "../../../../../services/API.js";
 import { Brain, LoaderCircle } from "lucide-react";
 import { toast } from "sonner";
-import { useAuth } from '@clerk/clerk-react';
-
+import { useAuth } from "@clerk/clerk-react";
 
 function buildResumeDetails(resumeInfo) {
   if (!resumeInfo) return "";
 
   const experiences = resumeInfo.experience || [];
   const companyTitles = experiences
-    .map(exp => {
+    .map((exp) => {
       const parts = [];
       if (exp.companyName) parts.push(exp.companyName);
       if (exp.title) parts.push(`as ${exp.title}`);
@@ -24,12 +30,12 @@ function buildResumeDetails(resumeInfo) {
     .join(", ");
 
   const skills = (resumeInfo.skills || [])
-    .map(skill => skill.name)
+    .map((skill) => skill.name)
     .filter(Boolean)
     .join(", ");
 
   const educations = (resumeInfo.education || [])
-    .map(edu => {
+    .map((edu) => {
       let eduStr = "";
       if (edu.degree) eduStr += edu.degree;
       if (edu.major) eduStr += ` in ${edu.major}`;
@@ -47,7 +53,6 @@ function buildResumeDetails(resumeInfo) {
   return detailsParts.join(", ") + ".";
 }
 
-
 const prompt = `
   You are writing a professional resume summary.
   Job Title: {jobTitle}
@@ -60,9 +65,24 @@ function Summery({ enabledNext }) {
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext);
   const [summery, setSummery] = useState();
   const [loading, setLoading] = useState(false);
-  const [level, setLevel] = useState("Freasher");
+  const [level, setLevel] = useState("Fresher");
   const { getToken } = useAuth();
   const params = useParams();
+
+  useEffect(() => {
+    if (level !== "Fresher") {
+      toast(`🚀 Level updated to ${level}`, {
+        description: "Click 'Generate from AI' again for a stronger summary.",
+        duration: 4000, 
+        className:
+          "bg-primary text-white font-semibold border-l-4 border-yellow-400 shadow-lg",
+        action: {
+          label: "Regenerate",
+          onClick: () => GenerateSummeryFromAI(),
+        },
+      });
+    }
+  }, [level]);
 
   useEffect(() => {
     summery &&
@@ -74,11 +94,10 @@ function Summery({ enabledNext }) {
   const GenerateSummeryFromAI = async () => {
     setLoading(true);
     const PROMPT = prompt
-                    .replace("{jobTitle}", resumeInfo?.jobTitle)
-                    .replace("{level}", level)
-                    .replace("{details}", buildResumeDetails(resumeInfo));
+      .replace("{jobTitle}", resumeInfo?.jobTitle)
+      .replace("{level}", level)
+      .replace("{details}", buildResumeDetails(resumeInfo));
 
-    
     try {
       const aiResponseText = await API.AIChatSession(PROMPT);
       setSummery(aiResponseText);
@@ -98,7 +117,7 @@ function Summery({ enabledNext }) {
         summery: summery,
       },
     };
-    API.UpdateResumeDetail(params?.resumeId, data, getToken ).then(
+    API.UpdateResumeDetail(params?.resumeId, data, getToken).then(
       (resp) => {
         console.log(resp);
         enabledNext(true);
@@ -119,15 +138,21 @@ function Summery({ enabledNext }) {
         <form className="mt-7" onSubmit={onSave}>
           <div className="flex justify-between items-end">
             <label>Add Summery</label>
-            <select
-              value={level}
-              onChange={(e) => setLevel(e.target.value)}
-              className="border-primary text-primary rounded p-2"
-            >
-              <option value="Fresher">Freseher</option>
-              <option value="Mid Level">Mid Level</option>
-              <option value="Senior Level">Senior Level</option>
-            </select>
+
+            <Select value={level} onValueChange={setLevel}>
+              <SelectTrigger className="w-[180px] border-primary text-primary rounded p-2">
+                <SelectValue
+                  className="text-red-600"
+                  placeholder="Select Level"
+                />
+              </SelectTrigger>
+              <SelectContent side="bottom">
+                <SelectItem value="Fresher">Fresher</SelectItem>
+                <SelectItem value="Mid Level">Mid Level</SelectItem>
+                <SelectItem value="Senior Level">Senior Level</SelectItem>
+              </SelectContent>
+            </Select>
+
             <Button
               variant="outline"
               onClick={() => GenerateSummeryFromAI()}

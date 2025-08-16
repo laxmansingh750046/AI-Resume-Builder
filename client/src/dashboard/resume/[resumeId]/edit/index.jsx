@@ -5,17 +5,19 @@ import ResumePreview from '../../components/ResumePreview.jsx';
 import { ResumeInfoContext } from '../../../../context/ResumeInfoContext.jsx';
 import { useAuth } from '@clerk/clerk-react';
 import API from '../../../../../services/API.js';
+import Data from '../../../../data/dummy.jsx'
 
 function EditResume() {
   const [resumeInfo, setResumeInfo] = useState();
   const {resumeId} = useParams();
   const {getToken} = useAuth();
-
   useEffect(()=>{
       getResumeInfo();
   },[])
 
   const getResumeInfo = ()=>{
+    // setResumeInfo(Data);
+
     API.GetResumeById(resumeId, getToken).then(res=>{
     setResumeInfo(res.data.data);})
   }

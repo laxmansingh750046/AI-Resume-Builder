@@ -13,7 +13,7 @@ function ExperiencePreview({ resumeInfo }) {
           <h2 className="text-sm font-bold">{experience?.title}</h2>
           <h2 className="text-xs flex justify-between">
             {[experience?.companyName, experience?.city, experience?.state]
-              .filter(Boolean) // removes null, undefined, and empty strings
+              .filter(Boolean) 
               .join(", ")}
             <span>
               {experience?.startDate} TO{" "}
