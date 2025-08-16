@@ -1,12 +1,54 @@
-# React + Vite
+# AI Resume Builder
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[Visit the Live App](https://ai-resume-builder-pi-lovat.vercel.app/)
 
-Currently, two official plugins are available:
+Build and customize professional resumes quickly using AI-powered helpers.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+##  Table of Contents
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- [Overview](#overview)  
+- [Features](#features)  
+- [Getting Started](#getting-started)  
+  - [Prerequisites](#prerequisites)  
+  - [Installation](#installation)  
+  - [Running the App Locally](#running-the-app-locally)  
+- [Usage](#usage)  
+- [Tech Stack](#tech-stack)  
+- [Credits & License](#credits--license)  
+- [Contact](#contact)  
+
+---
+
+##  Overview
+
+**AI Resume Builder** is a web application designed to help users generate ATS-friendly resumes using AI suggestions and intuitive templates. Whether you're starting from scratch or polishing existing content, this tool streamlines resume creation through AI-assisted editing and formatting.
+
+---
+
+##  Features
+
+- **Smart Resume Editor** — Write or paste your resume, and get real-time AI suggestions for rewriting, formatting, and optimizing the content.  
+- **Multiple Templates** — Choose from a selection of resume layouts tailored for different industries and styles.  
+- **One-Click Enhancement** — Improve bullet points, grammar, and tone with auto-suggestions powered by AI.  
+- **Export Options** — Download your resume as a PDF or DOCX file with clean formatting.  
+- **Optional Job Description Matching** — (If available) Paste a job description and get keyword matching or alignment suggestions to tailor your resume.
+
+*Note: If your app includes features like resume parsing, real-time previews, or progress tracking, be sure to highlight those here!*
+
+---
+
+##  Getting Started
+
+### Prerequisites
+
+- Node.js (v16 or newer recommended)  
+- npm or Yarn package manager
+
+### Installation
+
+1. **Clone the Repository**  
+   ```bash
+   git clone https://github.com/yourusername/ai-resume-builder.git
+   cd ai-resume-builder
