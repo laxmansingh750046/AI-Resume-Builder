@@ -11,7 +11,7 @@ import { toast } from "sonner";
 
 
 
-function Education() {
+function Education({enabledNext}) {
   const [educationalList, setEducationalList] = useState([
     {
       universityName: "",
@@ -32,6 +32,7 @@ function Education() {
   }, []);
 
   const handleChange = (event, index) => {
+    enabledNext(false);
     const newEntries = educationalList.slice();
     const { name, value } = event.target;
     newEntries[index][name] = value;
@@ -65,7 +66,7 @@ function Education() {
     };
     API.UpdateResumeDetail(params?.resumeId, data, getToken).then(
       (res) => {
-        console.log(res);
+        enabledNext(true);
         setLoading(false);
         toast("Details updated !");
       },

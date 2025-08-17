@@ -20,7 +20,7 @@ const formField={
 
 }
 
-function Experience() {
+function Experience({enabledNext}) {
     const [experinceList,setExperinceList]=useState([formField]);
     const {resumeInfo,setResumeInfo}=useContext(ResumeInfoContext);
     const params=useParams();
@@ -32,6 +32,7 @@ function Experience() {
     },[resumeInfo])
 
     const handleChange=(index,event)=>{
+        enabledNext(false);
         const newEntries=experinceList.slice();
         const {name,value}=event.target;
         newEntries[index][name]=value;
@@ -66,7 +67,7 @@ function Experience() {
          console.log(experinceList)
 
         API.UpdateResumeDetail(params?.resumeId,data, getToken).then(res=>{
-            console.log(res);
+            enabledNext(true);
             setLoading(false);
             toast('Details updated !')
         },(error)=>{

@@ -19,7 +19,7 @@ const formField = {
   currentlyWorking: false,
 }
 
-function Projects() {
+function Projects({enabledNext}) {
   const [projectList, setProjectList] = useState([formField])
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext)
   const params = useParams()
@@ -31,6 +31,7 @@ function Projects() {
   }, [resumeInfo])
 
   const handleChange = (index, event) => {
+    enabledNext(false);
     const newEntries = [...projectList]
     const { name, value, type, checked } = event.target
     newEntries[index][name] = type === 'checkbox' ? checked : value
@@ -64,6 +65,7 @@ function Projects() {
 
     API.UpdateResumeDetail(params?.resumeId, data, getToken).then(
       (res) => {
+        enabledNext(true);
         setLoading(false)
         toast('Projects updated!')
       },

@@ -40,13 +40,13 @@ function FormSection() {
         {activeFormIndex==1?  
         <PersonalDetail enabledNext={setEnableNext}/>
         :activeFormIndex==2?
-        <Education/>
+        <Education enabledNext={setEnableNext}/>
         :activeFormIndex==3?
-        <Experience />  
+        <Experience enabledNext={setEnableNext}/>  
         :activeFormIndex==4?
-        <Skills/>
+        <Skills enabledNext={setEnableNext}/>
         :activeFormIndex==5?
-        <Projects/>
+        <Projects enabledNext={setEnableNext}/>
         :activeFormIndex==6?
         <Summery enabledNext={setEnableNext}/>
         :activeFormIndex==7?

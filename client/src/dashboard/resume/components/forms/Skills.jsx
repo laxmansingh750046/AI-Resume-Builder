@@ -10,7 +10,7 @@ import API from "../../../../../services/API";
 import { useParams } from "react-router-dom";
 import { toast } from "sonner";
 
-function Skills() {
+function Skills({enabledNext}) {
   const [skillsList, setSkillsList] = useState([
     {
       name: "",
@@ -28,6 +28,7 @@ function Skills() {
   }, []);
 
   const handleChange = (index, name, value) => {
+    enabledNext(false);
     const newEntries = skillsList.slice();
     newEntries[index][name] = value;
     setSkillsList(newEntries);
@@ -54,6 +55,7 @@ function Skills() {
      }
      API.UpdateResumeDetail(params?.resumeId, data, getToken).then(
       (res)=>{
+        enabledNext(true);
         setLoading(false);
         toast("Details updated !");
       },

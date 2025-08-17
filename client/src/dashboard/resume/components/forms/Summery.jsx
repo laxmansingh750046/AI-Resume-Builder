@@ -92,6 +92,7 @@ function Summery({ enabledNext }) {
       });
   }, [summery]);
   const GenerateSummeryFromAI = async () => {
+    enabledNext(false);
     setLoading(true);
     const PROMPT = prompt
       .replace("{jobTitle}", resumeInfo?.jobTitle)
@@ -110,7 +111,6 @@ function Summery({ enabledNext }) {
 
   const onSave = (e) => {
     e.preventDefault();
-
     setLoading(true);
     const data = {
       data: {
@@ -168,7 +168,7 @@ function Summery({ enabledNext }) {
             required
             value={summery}
             defaultValue={summery ? summery : resumeInfo?.summery}
-            onChange={(e) => setSummery(e.target.value)}
+            onChange={(e) => {setSummery(e.target.value),enabledNext(false)}}
           />
           <div className="mt-2 flex justify-end">
             <Button type="submit" disabled={loading}>
