@@ -1,12 +1,11 @@
 import { Button } from '../../../../components/ui/button.jsx'
 import { Input } from '../../../../components/ui/input.jsx'
 import { useContext, useEffect, useState } from 'react'
-import RichTextEditor from '../RichTextEditor'
 import { ResumeInfoContext } from '../../../../context/ResumeInfoContext.jsx'
 import { useParams } from 'react-router-dom'
 import API from './../../../../../services/API.js'
 import { toast } from 'sonner'
-import { LoaderCircle } from 'lucide-react'
+import { Brain, LoaderCircle } from 'lucide-react'
 import { useAuth } from '@clerk/clerk-react'
 
 const formField = {
@@ -19,11 +18,12 @@ const formField = {
   currentlyWorking: false,
 }
 
-function Projects({enabledNext}) {
+function Projects({ enabledNext }) {
   const [projectList, setProjectList] = useState([formField])
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfoContext)
   const params = useParams()
   const [loading, setLoading] = useState(false)
+  const [generating, setGenerating] = useState(false)
   const { getToken } = useAuth()
 
   useEffect(() => {
@@ -31,19 +31,10 @@ function Projects({enabledNext}) {
   }, [resumeInfo])
 
   const handleChange = (index, event) => {
-    enabledNext(false);
+    enabledNext(false)
     const newEntries = [...projectList]
     const { name, value, type, checked } = event.target
     newEntries[index][name] = type === 'checkbox' ? checked : value
-    setProjectList(newEntries)
-    setResumeInfo({ ...resumeInfo, projects: newEntries })
-  }
-
-  const handleRichTextEditor = (e, name, index, value) => {
-    enabledNext(false);
-    const newEntries = [...projectList]
-    if (e) newEntries[index][name] = e.target.value
-    else newEntries[index][name] = value
     setProjectList(newEntries)
     setResumeInfo({ ...resumeInfo, projects: newEntries })
   }
@@ -53,7 +44,7 @@ function Projects({enabledNext}) {
   }
 
   const RemoveProject = () => {
-    enabledNext(false);
+    enabledNext(false)
     setProjectList((prev) => prev.slice(0, -1))
   }
 
@@ -67,7 +58,7 @@ function Projects({enabledNext}) {
 
     API.UpdateResumeDetail(params?.resumeId, data, getToken).then(
       (res) => {
-        enabledNext(true);
+        enabledNext(true)
         setLoading(false)
         toast('Projects updated!')
       },
@@ -75,6 +66,32 @@ function Projects({enabledNext}) {
         setLoading(false)
       }
     )
+  }
+
+  const generateDescription = async (index) => {
+    try {
+      setGenerating(true)
+      const project = projectList[index]
+      const prompt = `Write a concise professional project description for resume. 
+      Project Name: ${project.name}
+      Technologies: ${project.technologies?.join(', ')}
+      Start Date: ${project.startDate}, End Date: ${project.endDate}
+      Currently Working: ${project.currentlyWorking}`
+
+      const result = await API.AIChatSession(prompt)
+
+      if (result) {
+        const newEntries = [...projectList]
+        newEntries[index].description = result
+        setProjectList(newEntries)
+        setResumeInfo({ ...resumeInfo, projects: newEntries })
+        toast('Description generated!')
+      }
+    } catch (err) {
+      toast.error('Failed to generate description')
+    } finally {
+      setGenerating(false)
+    }
   }
 
   return (
@@ -134,13 +151,30 @@ function Projects({enabledNext}) {
                   </label>
                 </div>
                 <div className="col-span-2">
-                  <label className="text-xs">Description</label>
-                  <RichTextEditor
-                    index={index}
+                  <label className="text-xs flex items-center justify-between">
+                    Description
+                    <Button
+                      type="button"
+                      size="sm"
+                      variant="outline"
+                      disabled={generating}
+                      className="flex gap-2 border-primary text-primary"
+                      onClick={() => generateDescription(index)}
+                    >
+                      {generating ? (
+                        <LoaderCircle className="animate-spin h-4 w-4" />
+                      ) : (
+                        <><Brain className="h-4 w-4 mr-1" /> Generate from AI</>
+                      )}
+                    </Button>
+                  </label>
+                  <textarea
+                    name="description"
+                    className="w-full border rounded p-2 text-sm mt-1"
+                    rows={3}
+                    placeholder="Brief description of the project..."
                     defaultValue={item?.description}
-                    onRichTextEditorChange={(event, val = null) =>
-                      handleRichTextEditor(event, 'description', index, val)
-                    }
+                    onChange={(event) => handleChange(index, event)}
                   />
                 </div>
                 <div className="col-span-2">
