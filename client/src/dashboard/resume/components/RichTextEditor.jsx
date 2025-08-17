@@ -12,7 +12,7 @@ const PROMPT = `
     Return the result strictly as an HTML <ul> element with <li> items, no other text, no explanations, and no code block formatting. 
     Output only the HTML snippet.
   `;
-function RichTextEditor({jobTitle,onRichTextEditorChange,index,defaultValue}) {
+function RichTextEditor({jobTitle,onRichTextEditorChange,defaultValue}) {
     const [value,setValue]=useState(defaultValue);
     const [loading,setLoading]=useState(false);
     
