@@ -45,10 +45,12 @@ function Experience({enabledNext}) {
     }
 
     const RemoveExperience=()=>{
+        enabledNext(false);
         setExperinceList(experinceList=>experinceList.slice(0,-1))
     }
 
     const handleRichTextEditor=(e,name,index,value)=>{
+        enabledNext(false);
         const newEntries=experinceList.slice();
         if(e) newEntries[index][name]=e.target.value;
         else newEntries[index][name] = value;

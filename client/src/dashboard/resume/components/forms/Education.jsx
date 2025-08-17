@@ -54,6 +54,7 @@ function Education({enabledNext}) {
   };
 
   const RemoveEducation = () => {
+    enabledNext(false);
     setEducationalList((educationalList) => educationalList.slice(0, -1));
   };
 

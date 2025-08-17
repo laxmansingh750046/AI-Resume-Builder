@@ -45,6 +45,7 @@ function Skills({enabledNext}) {
   };
 
   const RemoveSkills = () => {
+    enabledNext(false);
     setSkillsList((skillsList) => skillsList.slice(0, -1));
   };
 

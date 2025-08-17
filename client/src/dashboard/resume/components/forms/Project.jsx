@@ -40,6 +40,7 @@ function Projects({enabledNext}) {
   }
 
   const handleRichTextEditor = (e, name, index, value) => {
+    enabledNext(false);
     const newEntries = [...projectList]
     if (e) newEntries[index][name] = e.target.value
     else newEntries[index][name] = value
@@ -52,6 +53,7 @@ function Projects({enabledNext}) {
   }
 
   const RemoveProject = () => {
+    enabledNext(false);
     setProjectList((prev) => prev.slice(0, -1))
   }
 
